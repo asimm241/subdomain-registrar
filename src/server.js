@@ -175,6 +175,7 @@ export class SubdomainServer {
     // do a quick pre-check for the subdomain name so that we can exit early in the
     //   the "non-race-condition" case.
     const inQueue = await this.isSubdomainInQueue(subdomainName)
+    
     if (inQueue) {
       logger.warn(`Name queued already: ${subdomainName}`,
                   { msgType: 'repeat_name', name: subdomainName, ip: ipAddress })

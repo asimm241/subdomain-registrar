@@ -4,7 +4,19 @@ import logger from 'winston'
 
 export async function isSubdomainRegistered(fullyQualifiedAddress: String) {
   try {
-    const nameInfo = await bskConfig.network.getNameInfo(fullyQualifiedAddress)
+    // const nameInfo = await bskConfig.network.getNameInfo(fullyQualifiedAddress)
+    const nameInfo = {
+      address: "1J3PUxY5uDShUnHRrMyU6yKtoHEUPhKULs",
+      blockchain: "bitcoin",
+      expire_block: 599266,
+      grace_period: false,
+      last_txid: "1edfa419f7b83f33e00830bc9409210da6c6d1db60f99eda10c835aa339cad6b",
+      renewal_deadline: 604266,
+      resolver: null,
+      status: "registered",
+      zonefile: "$ORIGIN muneeb.id\n$TTL 3600\n_http._tcp IN URI 10 1 \"https://gaia.blockstack.org/hub/1J3PUxY5uDShUnHRrMyU6yKtoHEUPhKULs/0/profile.json\"\n",
+      zonefile_hash: "37aecf837c6ae9bdc9dbd98a268f263dacd00361"
+    }
     return (nameInfo.status === 'registered_subdomain')
   } catch (err) {
     if (err.message === 'Name not found') {
@@ -35,12 +47,13 @@ export async function isRegistrationValid(
     logger.debug(`seqn: ${sequenceNumber} failed validation`)
     return false
   }
+
   // owner should be a bitcoin address
-  const btcRegex = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/
-  if (!btcRegex.test(owner)) {
-    logger.debug(`owner: ${owner} failed validation`)
-    return false
-  }
+  // const btcRegex = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/
+  // if (!btcRegex.test(owner)) {
+  //   logger.debug(`owner: ${owner} failed validation`)
+  //   return false
+  // }
   // subdomain name should be a legal name
   const subdomainRegex = /^[a-z0-9\-_+]{1,37}$/
   if (!subdomainRegex.test(subdomainName)) {
@@ -51,9 +64,11 @@ export async function isRegistrationValid(
     return true
   }
 
+
   // shouldn't already exist
   try {
     const isRegistered = await isSubdomainRegistered(`${subdomainName}.${domainName}`)
+    console.log("is subdomain registered")
     if (isRegistered) {
       logger.warn(`${subdomainName}.${domainName} already exists`)
     }
