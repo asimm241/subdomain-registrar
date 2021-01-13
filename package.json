@@ -41,6 +41,7 @@
   },
   "scripts": {
     "start": "npm run build && node lib/index.js",
+    "start:regtest": "BSK_SUBDOMAIN_CONFIG=config-sample-copy.json BSK_SUBDOMAIN_REGTEST=true npm run start",
     "build": "babel src -d lib",
     "flow": "flow",
     "lint": "eslint src",

@@ -3,12 +3,9 @@ import logger from 'winston'
 import { exec } from 'child_process'
 import { StacksMocknet } from '@stacks/network'
 
-// export const PAYER_SK = 'bb68eda988e768132bc6c7ca73a87fb9b0918e9a38d3618b74099be25f7cab7d01'
-export const PAYER_SK = 'b8d99fd45da58038d630d9855d3ca2466e8e0f89d3894c4724f0efc9ff4b51f001'
-// export const OWNER_SK = '8f87d1ea26d03259371675ea3bd31231b67c5df0012c205c154764a124f5b8fe01'
-export const OWNER_SK = 'b8d99fd45da58038d630d9855d3ca2466e8e0f89d3894c4724f0efc9ff4b51f001'
-// export const DEVELOP_DOMAIN = 'foo.id'
-export const DEVELOP_DOMAIN = 'abcdef.xyz'
+export const PAYER_SK = 'bb68eda988e768132bc6c7ca73a87fb9b0918e9a38d3618b74099be25f7cab7d01'
+export const OWNER_SK = '8f87d1ea26d03259371675ea3bd31231b67c5df0012c205c154764a124f5b8fe01'
+export const DEVELOP_DOMAIN = 'foo.id'
 
 function pExec(cmd) {
   return new Promise(
@@ -26,18 +23,10 @@ function pExec(cmd) {
 export function configureRegtest() {
   bskConfig.network = bskNetwork.defaults.LOCAL_REGTEST
   bskConfig.network = new StacksMocknet()
-
-  // bskConfig.network.blockstackAPIUrl = 'http://localhost:20443'
-  // bskConfig.network.broadcastServiceUrl = 'http://localhost:20444'
-
-  // bskConfig.network.btc.bitcoindUrl = 'http://localhost:28443/'
-  // bskConfig.network.btc.bitcoindCredentials = { username: 'helium-node', password: 'secret' }
   if (process.env.BLOCKSTACK_TEST_CLIENT_RPC_PORT) {
     const port = process.env.BLOCKSTACK_TEST_CLIENT_RPC_PORT
     bskConfig.network.blockstackAPIUrl = `http://localhost:${port}`
   }
-
-  console.log('Config', bskConfig.network)
 }
 
 export function initializeBlockstackCore(forceRestart: ?Boolean = false,
