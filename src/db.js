@@ -105,8 +105,7 @@ export class RegistrarQueueDB {
   dbLocation: string
   db: sqlite3.Database
 
-  constructor(dbLocation: string) {
-    // this.dbLocation = dbLocation
+  constructor(dbLocation: string) { // eslint-disable-line
     const dbPath = path.resolve(__dirname, 'subdomain_registrar.db')
     this.dbLocation = dbPath
   }
